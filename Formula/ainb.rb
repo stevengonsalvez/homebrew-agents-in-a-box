@@ -2,22 +2,22 @@ class Ainb < Formula
   desc "Terminal-based development environment manager for Claude Code agents"
   homepage "https://github.com/stevengonsalvez/agents-in-a-box"
   license "MIT"
-  version "1.17.0"
+  version "1.18.0"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.17.0/ainb-1.17.0-aarch64-apple-darwin.tar.gz"
-      sha256 "50cd9f9387ae29b28cd537d6317b20a1ab0934db7653b7f416e27f68cb2f5879"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.18.0/ainb-1.18.0-aarch64-apple-darwin.tar.gz"
+      sha256 "e90cddd0d7a03225d7cbdc0700b685155c6dcfae2cb6dac17c43e42a17fea3cd"
     else
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.17.0/ainb-1.17.0-x86_64-apple-darwin.tar.gz"
-      sha256 "649dc22c5d15445bead60271672b9aed6ec8806113abd5fd570d8f1f05c437c6"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.18.0/ainb-1.18.0-x86_64-apple-darwin.tar.gz"
+      sha256 "0b5fba69f2e02d9c150c2d0697f9f0bba8480ccd7b13ee566bbd56907f417a35"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.17.0/ainb-1.17.0-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "4d63ff2edd8f4d629b6285e6707e5dc16991e0e5495d4837b9deebaf30f6133c"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.18.0/ainb-1.18.0-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "81151fadedced5050a0800a7387ceeebb8c1bb567ce09edc440e5add7d0c2997"
     end
   end
 
@@ -29,6 +29,9 @@ class Ainb < Formula
     # user-set AINB_PLUGIN_ROOT still wins.
     libexec.install "ainb"
     libexec.install "plugins" if File.directory?("plugins")
+    # ainb(1). Guarded so this formula still installs an older
+    # tarball that predates the man page.
+    man1.install "share/man/man1/ainb.1" if File.exist?("share/man/man1/ainb.1")
     (bin/"ainb").write <<~WRAPPER
       #!/bin/bash
       export AINB_PLUGIN_ROOT="${AINB_PLUGIN_ROOT:-#{libexec}/plugins}"
