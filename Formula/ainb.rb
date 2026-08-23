@@ -2,22 +2,22 @@ class Ainb < Formula
   desc "Terminal-based development environment manager for Claude Code agents"
   homepage "https://github.com/stevengonsalvez/agents-in-a-box"
   license "MIT"
-  version "1.21.7"
+  version "1.21.8"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.7/ainb-1.21.7-aarch64-apple-darwin.tar.gz"
-      sha256 "4a9725eccc45e92761330302a1b66e654e8bd872391c1925e49d58432d5a429b"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.8/ainb-1.21.8-aarch64-apple-darwin.tar.gz"
+      sha256 "714b6fc2954c57dbb28c323b484bbdbca777084b3930d0d89052c2d61419ce3d"
     else
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.7/ainb-1.21.7-x86_64-apple-darwin.tar.gz"
-      sha256 "53adefcfe8d77c1c78d58ac16544d4142da12a3e7c27ff27115a9b1279c03f28"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.8/ainb-1.21.8-x86_64-apple-darwin.tar.gz"
+      sha256 "dbf3bce0496696ee99fad5fa982d455998881bb61ed5728dec75e318ed90eb24"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.7/ainb-1.21.7-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "bf099402834c954dc19af9dcb65b2499df4ffea4f5eae0b7ab8227ab35214675"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.21.8/ainb-1.21.8-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "dd30b3cbc4534af9a3a21b21f51ef512402ecfe59a88b47b78dbc97b4a8582f1"
     end
   end
 
