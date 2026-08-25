@@ -2,22 +2,22 @@ class Ainb < Formula
   desc "Terminal-based development environment manager for Claude Code agents"
   homepage "https://github.com/stevengonsalvez/agents-in-a-box"
   license "MIT"
-  version "1.22.5"
+  version "1.22.6"
 
   on_macos do
     if Hardware::CPU.arm?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.5/ainb-1.22.5-aarch64-apple-darwin.tar.gz"
-      sha256 "f5dc9e305784e9c18a12f237e360e9e67b3c1604b0a350ae97bdee671c781667"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.6/ainb-1.22.6-aarch64-apple-darwin.tar.gz"
+      sha256 "3e615b26cb0ed9bfd1c2863ef49f28e425c5abf9c4459653708642262241bf36"
     else
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.5/ainb-1.22.5-x86_64-apple-darwin.tar.gz"
-      sha256 "66bc75800d737fc4080e5b59987baf454cd1566ac43a7d20ebfca21b7f1280df"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.6/ainb-1.22.6-x86_64-apple-darwin.tar.gz"
+      sha256 "ef7c3df16a4759eafa93b6dd2f87c24ca2f8c87bd20738203cf9b4234abf10f1"
     end
   end
 
   on_linux do
     if Hardware::CPU.intel?
-      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.5/ainb-1.22.5-x86_64-unknown-linux-gnu.tar.gz"
-      sha256 "b9c395861098f2b074ac0b395a31d58e2a2e930e36bdf25ca9f22c766654360a"
+      url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v1.22.6/ainb-1.22.6-x86_64-unknown-linux-gnu.tar.gz"
+      sha256 "a85ef1a8af16d5162f1e77f4ec8172ee3785ab371206bcb42b705aa6db06a44e"
     end
   end
 
@@ -34,6 +34,23 @@ class Ainb < Formula
     man1.install "share/man/man1/ainb.1" if File.exist?("share/man/man1/ainb.1")
     (bin/"ainb").write <<~WRAPPER
       #!/bin/bash
+      # This value names a keg-versioned path, so an older install's
+      # export outlives the keg. Inherited from a long-lived shell or
+      # a tmux server environment it survives `brew upgrade` and then
+      # either points at a directory the upgrade deleted (every plugin
+      # screen comes up empty) or, until `brew cleanup` runs and
+      # removes the old keg, still resolves — pairing this binary with
+      # the PREVIOUS release's plugin binaries.
+      #
+      # Drop any inherited value naming a different ainb keg, whether
+      # or not it still exists. A genuine user override (any path not
+      # under an ainb Cellar keg) is untouched.
+      case "${AINB_PLUGIN_ROOT}" in
+        "" ) ;;
+        "#{libexec}/plugins" ) ;;
+        */Cellar/ainb/* ) unset AINB_PLUGIN_ROOT ;;
+        * ) [ -d "${AINB_PLUGIN_ROOT}" ] || unset AINB_PLUGIN_ROOT ;;
+      esac
       export AINB_PLUGIN_ROOT="${AINB_PLUGIN_ROOT:-#{libexec}/plugins}"
       exec "#{libexec}/ainb" "$@"
     WRAPPER
