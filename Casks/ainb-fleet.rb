@@ -1,6 +1,6 @@
 cask "ainb-fleet" do
-  version "1.28.4"
-  sha256 "4bd459122a25bcc31e83a1b953695637257e22e01810235b4574907668b94cbc"
+  version "1.28.5"
+  sha256 "ac86fda81f44b9b2e1c723c6cbfdd2bbef678bfb7639e6ac9757545e7d4c0c52"
 
   url "https://github.com/stevengonsalvez/agents-in-a-box/releases/download/v#{version}/AINBFleet-#{version}.dmg"
   name "AINB Fleet"
